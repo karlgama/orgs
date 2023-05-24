@@ -1,11 +1,13 @@
-package alura.orgs
+package alura.orgs.ui.activity
 
+import alura.orgs.R
+import alura.orgs.ui.recylerview.adapter.ListaProdutoAdapter
 import android.app.Activity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
 
-class MainActivity: Activity() {
+class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -16,5 +18,7 @@ class MainActivity: Activity() {
 //        nome.text = "Teste"
 //        descricao.text = "Teste"
 //        preco.text = "Teste"
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView);
+        recyclerView.adapter = ListaProdutoAdapter()
     }
 }
