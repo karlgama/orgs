@@ -1,23 +1,24 @@
 package alura.orgs.ui.activity
 
-import alura.orgs.R
 import alura.orgs.dao.ProdutosDao
+import alura.orgs.databinding.ActivityListaProdutosBinding
 import alura.orgs.ui.recylerview.adapter.ListaProdutoAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos) {
+class ListaProdutosActivity : AppCompatActivity() {
+
     private val dao = ProdutosDao()
-    private val adapter = ListaProdutoAdapter(
-        context = this, produtos = dao.listar()
-    )
+    private val adapter = ListaProdutoAdapter(context = this, produtos = dao.listar())
+    private val binding by lazy {
+        ActivityListaProdutosBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
     }
@@ -27,13 +28,8 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
         adapter.atualiza(dao.listar())
     }
 
-    private fun configuraRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.activity_lista_produto_recyclerView);
-        recyclerView.adapter = adapter
-    }
-
     private fun configuraFab() {
-        val fab = findViewById<FloatingActionButton>(R.id.activity_lista_produto_floatingActionButton)
+        val fab = binding.activityListaProdutoFloatingActionButton
         fab.setOnClickListener {
             vaiParaFormularioProduto()
         }
@@ -44,5 +40,9 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
         startActivity(intent)
     }
 
+    private fun configuraRecyclerView() {
+        val recyclerView = binding.activityListaProdutoRecyclerView
+        recyclerView.adapter = adapter
+    }
 
 }
