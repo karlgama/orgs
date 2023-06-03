@@ -6,6 +6,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import java.text.NumberFormat
+import java.util.Locale
 
 class ListaProdutoAdapter(
     private val context: Context,
@@ -23,7 +25,9 @@ class ListaProdutoAdapter(
             val descricao = binding.produtoItemDescricao
             descricao.text = produto.descricao
             val valor = binding.produtoItemValor
-            valor.text = produto.preco.toPlainString()
+            val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
+            val valorEmMoeda = formatador.format(produto.preco)
+            valor.text = valorEmMoeda
         }
 
     }
