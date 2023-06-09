@@ -1,11 +1,13 @@
 package alura.orgs.ui.recylerview.adapter
 
+import alura.orgs.R
 import alura.orgs.databinding.ProdutoItemBinding
 import alura.orgs.model.Produto
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -28,6 +30,8 @@ class ListaProdutoAdapter(
             val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
             val valorEmMoeda = formatador.format(produto.preco)
             valor.text = valorEmMoeda
+//            binding.imageView.load()
+            binding.imageView.load(R.drawable.imagem_padrao)
         }
 
     }

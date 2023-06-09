@@ -3,10 +3,12 @@ package alura.orgs.ui.activity
 import alura.orgs.R
 import alura.orgs.dao.ProdutosDao
 import alura.orgs.databinding.ActivityFormularioProdutoBinding
+import alura.orgs.databinding.FormularioImagemBinding
 import alura.orgs.model.Produto
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -21,9 +23,18 @@ class FormularioProdutoActivity : AppCompatActivity() {
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem
             .setOnClickListener {
+                val bindingFormularioImagem = FormularioImagemBinding.inflate(layoutInflater)
+                bindingFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
+                    val url = bindingFormularioImagem.formularioImagemUrl.text.toString()
+                    bindingFormularioImagem.formularioImagemImageview.load(url)
+                }
+
                 AlertDialog.Builder(this)
-                    .setView(R.layout.formulario_imagem)
-                    .setPositiveButton("Confirmar") { _, _ -> }
+                    .setView(bindingFormularioImagem.root)
+                    .setPositiveButton("Confirmar") { _, _ ->
+                        val url = bindingFormularioImagem.formularioImagemUrl.text.toString()
+                        binding.activityFormularioProdutoImagem.load(url)
+                    }
                     .setNegativeButton("Cancelar") { _, _ -> }
                     .show()
             }
