@@ -1,10 +1,12 @@
 package alura.orgs.ui.activity
 
+import alura.orgs.R
 import alura.orgs.dao.ProdutosDao
 import alura.orgs.databinding.ActivityListaProdutosBinding
 import alura.orgs.ui.recylerview.adapter.ListaProdutoAdapter
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -21,6 +23,7 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
+
     }
 
     override fun onResume() {

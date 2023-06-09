@@ -1,9 +1,11 @@
 package alura.orgs.ui.activity
 
+import alura.orgs.R
 import alura.orgs.dao.ProdutosDao
 import alura.orgs.databinding.ActivityFormularioProdutoBinding
 import alura.orgs.model.Produto
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.math.BigDecimal
 
@@ -17,6 +19,14 @@ class FormularioProdutoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configuraBotaoSalvar()
+        binding.activityFormularioProdutoImagem
+            .setOnClickListener {
+                AlertDialog.Builder(this)
+                    .setView(R.layout.formulario_imagem)
+                    .setPositiveButton("Confirmar") { _, _ -> }
+                    .setNegativeButton("Cancelar") { _, _ -> }
+                    .show()
+            }
     }
 
     private fun configuraBotaoSalvar() {
