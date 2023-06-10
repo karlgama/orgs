@@ -31,7 +31,7 @@ class ListaProdutoAdapter(
             val valorEmMoeda = formatador.format(produto.preco)
             valor.text = valorEmMoeda
 //            binding.imageView.load()
-            binding.imageView.load(R.drawable.imagem_padrao)
+            binding.imageView.load(produto.imagem)
         }
 
     }

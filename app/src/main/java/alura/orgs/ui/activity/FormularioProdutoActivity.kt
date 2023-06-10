@@ -16,7 +16,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
-
+    private var url: String?  =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -32,7 +32,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
                 AlertDialog.Builder(this)
                     .setView(bindingFormularioImagem.root)
                     .setPositiveButton("Confirmar") { _, _ ->
-                        val url = bindingFormularioImagem.formularioImagemUrl.text.toString()
+                        url = bindingFormularioImagem.formularioImagemUrl.text.toString()
                         binding.activityFormularioProdutoImagem.load(url)
                     }
                     .setNegativeButton("Cancelar") { _, _ -> }
@@ -66,7 +66,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
         return Produto(
             nome = nome,
             descricao = descricao,
-            preco = valor
+            preco = valor,
+            imagem = url
         )
     }
 
