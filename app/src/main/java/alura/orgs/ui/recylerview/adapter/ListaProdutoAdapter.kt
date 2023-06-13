@@ -2,9 +2,11 @@ package alura.orgs.ui.recylerview.adapter
 
 import alura.orgs.R
 import alura.orgs.databinding.ProdutoItemBinding
+import alura.orgs.extensions.tentaCarregarImagem
 import alura.orgs.model.Produto
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -30,8 +32,16 @@ class ListaProdutoAdapter(
             val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
             val valorEmMoeda = formatador.format(produto.preco)
             valor.text = valorEmMoeda
-//            binding.imageView.load()
-            binding.imageView.load(produto.imagem)
+
+//            val visibilidade = if (produto.imagem != null) {
+//                View.VISIBLE
+//            } else {
+//                View.GONE
+//            }
+//
+//            binding.imageView.visibility = visibilidade
+
+            binding.imageView.tentaCarregarImagem(produto.imagem)
         }
 
     }
