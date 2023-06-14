@@ -1,15 +1,12 @@
 package alura.orgs.ui.activity
 
-import alura.orgs.R
 import alura.orgs.dao.ProdutosDao
 import alura.orgs.databinding.ActivityFormularioProdutoBinding
-import alura.orgs.databinding.FormularioImagemBinding
 import alura.orgs.extensions.tentaCarregarImagem
 import alura.orgs.model.Produto
+import alura.orgs.ui.dialog.FormularioImagemDialog
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import coil.load
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -17,28 +14,17 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
-    private var url: String?  =null
+    private var url: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        title = "Cadastrar produto"
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem
             .setOnClickListener {
-                val bindingFormularioImagem = FormularioImagemBinding.inflate(layoutInflater)
-                bindingFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
-                    val url = bindingFormularioImagem.formularioImagemUrl.text.toString()
-                    bindingFormularioImagem.formularioImagemImageview.tentaCarregarImagem(url)
-
+                FormularioImagemDialog(this).mostra { imagem ->
+                    binding.activityFormularioProdutoImagem.tentaCarregarImagem(imagem)
                 }
-
-                AlertDialog.Builder(this)
-                    .setView(bindingFormularioImagem.root)
-                    .setPositiveButton("Confirmar") { _, _ ->
-                        url = bindingFormularioImagem.formularioImagemUrl.text.toString()
-                        binding.activityFormularioProdutoImagem.tentaCarregarImagem(url)
-                    }
-                    .setNegativeButton("Cancelar") { _, _ -> }
-                    .show()
             }
     }
 
