@@ -2,6 +2,7 @@ package alura.orgs.ui.recylerview.adapter
 
 import alura.orgs.R
 import alura.orgs.databinding.ProdutoItemBinding
+import alura.orgs.extensions.formataParaMoedaBrasileira
 import alura.orgs.extensions.tentaCarregarImagem
 import alura.orgs.model.Produto
 import android.content.Context
@@ -15,34 +16,47 @@ import java.util.Locale
 
 class ListaProdutoAdapter(
     private val context: Context,
-    produtos: List<Produto>
+    produtos: List<Produto>,
+    var quandoClicaNoItem: (produto: Produto) -> Unit = {}
 ) : RecyclerView.Adapter<ListaProdutoAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
 
-    class ViewHolder(private val binding: ProdutoItemBinding) :
+    inner class ViewHolder(private val binding: ProdutoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private lateinit var produto: Produto
+
+        init {
+            itemView.setOnClickListener {
+                if (::produto.isInitialized) {
+                    quandoClicaNoItem(produto)
+                }
+            }
+        }
+
         fun vincula(produto: Produto) {
+            this.produto = produto
             val nome = binding.produtoItemNome
             nome.text = produto.nome
             val descricao = binding.produtoItemDescricao
             descricao.text = produto.descricao
             val valor = binding.produtoItemValor
-            val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
-            val valorEmMoeda = formatador.format(produto.preco)
+            val valorEmMoeda: String = produto.preco
+                .formataParaMoedaBrasileira()
             valor.text = valorEmMoeda
 
-//            val visibilidade = if (produto.imagem != null) {
-//                View.VISIBLE
-//            } else {
-//                View.GONE
-//            }
-//
-//            binding.imageView.visibility = visibilidade
+            val visibilidade = if (produto.imagem != null) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+            binding.imageView.visibility = visibilidade
 
             binding.imageView.tentaCarregarImagem(produto.imagem)
         }
+
 
     }
 
