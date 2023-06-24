@@ -1,6 +1,5 @@
 package alura.orgs.ui.recylerview.adapter
 
-import alura.orgs.R
 import alura.orgs.databinding.ProdutoItemBinding
 import alura.orgs.extensions.formataParaMoedaBrasileira
 import alura.orgs.extensions.tentaCarregarImagem
@@ -10,13 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import java.text.NumberFormat
-import java.util.Locale
 
 class ListaProdutoAdapter(
     private val context: Context,
-    produtos: List<Produto>,
+    produtos: List<Produto> = emptyList(),
     var quandoClicaNoItem: (produto: Produto) -> Unit = {}
 ) : RecyclerView.Adapter<ListaProdutoAdapter.ViewHolder>() {
 

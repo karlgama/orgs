@@ -1,12 +1,13 @@
 package alura.orgs.ui.activity
 
-import alura.orgs.dao.ProdutosDao
+import alura.orgs.database.AppDatabase
 import alura.orgs.databinding.ActivityFormularioProdutoBinding
 import alura.orgs.extensions.tentaCarregarImagem
 import alura.orgs.model.Produto
 import alura.orgs.ui.dialog.FormularioImagemDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -30,10 +31,18 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     private fun configuraBotaoSalvar() {
         val botaoSalvar = binding.activityFormularioProdutoBotaoSalvar
-        val dao = ProdutosDao()
+        val db = Room.databaseBuilder(
+            this,
+            AppDatabase::class.java,
+            "orgs.db"
+        ).allowMainThreadQueries()
+            .build()
+
+        val dao = db.produtoDao()
+
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            dao.adicionar(produtoNovo)
+            dao.salva(produtoNovo)
             finish()
         }
     }
