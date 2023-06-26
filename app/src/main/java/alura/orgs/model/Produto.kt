@@ -10,7 +10,7 @@ import java.math.BigDecimal
 @Entity
 data class Produto(
     @PrimaryKey(autoGenerate = true)
-    val uid: Long=0L,
+    val id: Long=0L,
     val nome: String,
     val descricao: String,
     val preco: BigDecimal,

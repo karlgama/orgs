@@ -12,6 +12,7 @@ import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
 
+    private var idProduto = 0L
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
@@ -27,6 +28,14 @@ class FormularioProdutoActivity : AppCompatActivity() {
                     binding.activityFormularioProdutoImagem.tentaCarregarImagem(imagem)
                 }
             }
+        intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)?.let { produtoCarregado ->
+            idProduto = produtoCarregado.id
+            binding.activityFormularioProdutoNome.setText(produtoCarregado.nome)
+            binding.activityFormularioProdutoDescricao.setText(produtoCarregado.descricao)
+            binding.activityFormularioProdutoImagem.tentaCarregarImagem(produtoCarregado.imagem)
+            binding.activityFormularioProdutoValor.setText(produtoCarregado.preco.toPlainString())
+            title="Alterar produto"
+        }
     }
 
     private fun configuraBotaoSalvar() {

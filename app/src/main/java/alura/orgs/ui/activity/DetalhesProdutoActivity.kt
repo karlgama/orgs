@@ -6,6 +6,7 @@ import alura.orgs.databinding.ActivityDetalhesProdutoBinding
 import alura.orgs.extensions.formataParaMoedaBrasileira
 import alura.orgs.extensions.tentaCarregarImagem
 import alura.orgs.model.Produto
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -36,8 +37,12 @@ class DetalhesProdutoActivity : AppCompatActivity() {
                     dao.remove(produto)
                     finish()
                 }
-
-                R.id.menu_detalhes_produto_editar -> {}
+                R.id.menu_detalhes_produto_editar -> {
+                    Intent(this,FormularioProdutoActivity::class.java).apply {
+                        putExtra(CHAVE_PRODUTO,produto)
+                        startActivity(this)
+                    }
+                }
             }
         }
         return super.onOptionsItemSelected(item)
