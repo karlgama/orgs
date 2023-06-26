@@ -1,10 +1,12 @@
 package alura.orgs.ui.activity
 
+import alura.orgs.R
 import alura.orgs.databinding.ActivityDetalhesProdutoBinding
 import alura.orgs.extensions.formataParaMoedaBrasileira
 import alura.orgs.extensions.tentaCarregarImagem
 import alura.orgs.model.Produto
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 
 class DetalhesProdutoActivity: AppCompatActivity(){
@@ -16,6 +18,11 @@ class DetalhesProdutoActivity: AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         tentaCarregarProduto()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detalhes_produto,menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun tentaCarregarProduto() {
