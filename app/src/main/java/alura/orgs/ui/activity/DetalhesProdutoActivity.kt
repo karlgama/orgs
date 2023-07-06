@@ -13,7 +13,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 
 class DetalhesProdutoActivity : AppCompatActivity() {
-    private var produtoId: Long? = null
+    private var produtoId: Long = 0L
     private var produto: Produto? = null
 
     private val dao by lazy { AppDatabase.instancia(this).produtoDao() }
@@ -29,15 +29,16 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        produtoId?.let { id ->
-            produto = dao.buscaPorId(id)
-        }
+        super.onResume()
+        buscaProduto()
+    }
+
+    private fun buscaProduto() {
+        produto = dao.buscaPorId(produtoId)
+
         produto?.let {
             preencheCampos(it)
         } ?: finish()
-
-        super.onResume()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,13 +49,13 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_detalhes_produto_remover -> {
-                produto?.let{ dao.remove(it) }
+                produto?.let { dao.remove(it) }
                 finish()
             }
 
             R.id.menu_detalhes_produto_editar -> {
                 Intent(this, FormularioProdutoActivity::class.java).apply {
-                    putExtra(CHAVE_PRODUTO, produto)
+                    putExtra(CHAVE_PRODUTO_ID, produtoId)
                     startActivity(this)
                 }
             }
@@ -65,9 +66,7 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
     private fun tentaCarregarProduto() {
-        intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)?.let { produtoCarregado ->
-            produtoId = produtoCarregado.id
-        } ?: finish()
+        produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
     }
 
     private fun preencheCampos(produtoCarregado: Produto) {
